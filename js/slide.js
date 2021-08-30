@@ -5,7 +5,7 @@ export class Slide{
         this.slide = document.querySelector(slide)
         this.wrapper = document.querySelector(wrapper);
         this.dist = { finalPosition: 0, startX: 0, movement: 0 };
-        this.activeClass = 'ativo';
+        this.activeClass = 'active';
         this.changeEvent = new Event('changeEvent');
     }
 
@@ -162,13 +162,13 @@ addArrow(prev, next){
         this.addArrowEvent();
     }
 
-    addArrowEvent(){
+addArrowEvent(){
         this.prevElement.addEventListener('click', this.activePrev);
         this.nextElement.addEventListener('click', this.activeNext);
 
     }
 
-    createControl(){
+createControl(){
         const control = document.createElement('ul');
         control.dataset.control = 'slide';
         this.slideArray.forEach((item, index)=>{
@@ -178,7 +178,7 @@ addArrow(prev, next){
         return control;
     }
 
-    eventControl(item, index){
+eventControl(item, index){
         item.addEventListener('click', (event)=>{
             event.preventDefault();
             this.changeSlide(index);
@@ -186,19 +186,19 @@ addArrow(prev, next){
         this.wrapper.addEventListener('changeEvent', this.activeControlItem);
     }
 
-    activeControlItem(){
+activeControlItem(){
         this.controlArray.forEach(item => item.classList.remove(this.activeClass));
         this.controlArray[this.index.active].classList.add(this.activeClass);
         this.activeControlItem();
     }
 
-    addControl(customControl){
+addControl(customControl){
         this.control = document.querySelector(customControl) || this.createControl();
         this.controlArray = [...this.control.children];
         this.controlArray.forEach(this.eventControl);
     }
 
-    bindControlEvents(){
+bindControlEvents(){
         this.eventControl = this.eventControl.bind(this);
         this.activeControlItem = this.activeControlItem.bind(this);
     }
